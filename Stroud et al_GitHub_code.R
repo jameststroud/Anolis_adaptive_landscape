@@ -8,10 +8,8 @@ library(dplyr); library(mgcv); library(lsmeans)
 library(ggplot2); library(performance)
 
 #2. Load data ----
-#file = miami_final.csv
+#file = "Stroudetal_GitHub_data.csv"
 res=read.csv(file.choose(""))
-
-write.csv(res,"Stroudetal_GitHub_data.csv")
 
 #6. Fitness surface ----
 
@@ -39,7 +37,7 @@ summary(comm.fit)
 #what's the edf of the surface?
 comm.fit$eff.df
 #ooh that's high!
-#quick and dirty look at the surface
+#quick look at the surface
 surface(comm.fit)
 #surface looks cool!
 
