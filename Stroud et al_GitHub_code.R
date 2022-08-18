@@ -986,57 +986,6 @@ sag.glm.full.ran.drop <- glmer(survival ~ scale(LD1)+scale(LD3)+
 s.sag.glm.full.ran = anova(sag.glm.full.ran, sag.glm.full.ran.drop)
 s.sag.glm.full.ran
 
-#model selection
-#linear models
-#here we will use AIC to determine the best model from:
-#1. standard GLM with selection terms of interest
-sag.glm.lin
-#2. mixed effect model with sampling.period as random effect
-sag.glm.lin.ran
-#3. mixed effect model with unique ID as random effect
-sag.glm.lin.id <- glmer(survival ~ scale(LD1)+scale(LD3) + (1|id_tag), 
-                        data = sag, 
-                        family = binomial(link = "logit"))
-#4. mixed effect model with both random effects
-sag.glm.lin.both <- glmer(survival ~ scale(LD1)+scale(LD3) +(1|sampling.session)+(1|id_tag), 
-                          data = sag, 
-                          family = binomial(link = "logit"))
-
-#model selection
-par(mfrow = c(1,1))
-plot(compare_performance(sag.glm.lin, sag.glm.lin.ran, sag.glm.lin.id, sag.glm.lin.both,
-                         rank=TRUE))
-compare_performance(sag.glm.lin, sag.glm.lin.ran, sag.glm.lin.id, sag.glm.lin.both,
-                    rank=TRUE)
-
-#nonlinear models
-#here we will use AIC to determine the best model from:
-#1. standard GLM with selection terms of interest
-sag.glm.full
-#2. mixed effect model with sampling.period as random effect
-sag.glm.full.ran
-#3. mixed effect model with unique ID as random effect
-sag.glm.full.id <- glmer(survival ~ scale(LD1)+scale(LD3)+
-                           I(scale(LD1)^2)+I(scale(LD3)^2)+
-                           scale(LD1):scale(LD3)+
-                           (1|id_tag), 
-                         data = sag, 
-                         family = binomial(link = "logit"))
-#4. mixed effect model with both random effects
-sag.glm.full.both <- glmer(survival ~ scale(LD1)+scale(LD3)+
-                             I(scale(LD1)^2)+I(scale(LD3)^2)+
-                             scale(LD1):scale(LD3)+
-                             (1|id_tag) + (1|sampling.session), 
-                           data = sag, 
-                           family = binomial(link = "logit"))
-
-#model selection
-par(mfrow = c(1,1))
-plot(compare_performance(sag.glm.full, sag.glm.full.ran, sag.glm.full.id, sag.glm.full.both,
-                         rank=TRUE))
-compare_performance(sag.glm.full, sag.glm.full.ran, sag.glm.full.id, sag.glm.full.both,
-                    rank=TRUE)
-
 ###11a(iii) LMs ----
 
 #standard model (linear)
